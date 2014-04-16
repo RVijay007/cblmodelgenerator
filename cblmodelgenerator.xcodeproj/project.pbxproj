@@ -11,6 +11,7 @@
 		0357B87018FF0CDE009EA464 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357B86F18FF0CDE009EA464 /* main.m */; };
 		0357B87418FF0CDE009EA464 /* cblmodelgenerator.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0357B87318FF0CDE009EA464 /* cblmodelgenerator.1 */; };
 		03B249CB18FF11AE00C40FD4 /* CBLModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03B249C918FF11AE00C40FD4 /* CBLModel.xcdatamodeld */; };
+		03B249D018FF1E8900C40FD4 /* CBLModelGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B249CF18FF1E8900C40FD4 /* CBLModelGenerator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,9 @@
 		0357B87218FF0CDE009EA464 /* cblmodelgenerator-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cblmodelgenerator-Prefix.pch"; sourceTree = "<group>"; };
 		0357B87318FF0CDE009EA464 /* cblmodelgenerator.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = cblmodelgenerator.1; sourceTree = "<group>"; };
 		03B249CA18FF11AE00C40FD4 /* CBLModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CBLModel.xcdatamodel; sourceTree = "<group>"; };
+		03B249CC18FF16B800C40FD4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		03B249CE18FF1E8900C40FD4 /* CBLModelGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLModelGenerator.h; sourceTree = "<group>"; };
+		03B249CF18FF1E8900C40FD4 /* CBLModelGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBLModelGenerator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +54,7 @@
 		0357B86018FF0CDE009EA464 = {
 			isa = PBXGroup;
 			children = (
+				03B249CC18FF16B800C40FD4 /* README.md */,
 				0357B86E18FF0CDE009EA464 /* cblmodelgenerator */,
 				0357B86B18FF0CDE009EA464 /* Frameworks */,
 				0357B86A18FF0CDE009EA464 /* Products */,
@@ -75,6 +80,7 @@
 		0357B86E18FF0CDE009EA464 /* cblmodelgenerator */ = {
 			isa = PBXGroup;
 			children = (
+				03B249CD18FF1E7600C40FD4 /* CBLModelGenerator */,
 				0357B86F18FF0CDE009EA464 /* main.m */,
 				0357B87318FF0CDE009EA464 /* cblmodelgenerator.1 */,
 				0357B87118FF0CDE009EA464 /* Supporting Files */,
@@ -89,6 +95,15 @@
 				0357B87218FF0CDE009EA464 /* cblmodelgenerator-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		03B249CD18FF1E7600C40FD4 /* CBLModelGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				03B249CE18FF1E8900C40FD4 /* CBLModelGenerator.h */,
+				03B249CF18FF1E8900C40FD4 /* CBLModelGenerator.m */,
+			);
+			path = CBLModelGenerator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0357B87018FF0CDE009EA464 /* main.m in Sources */,
+				03B249D018FF1E8900C40FD4 /* CBLModelGenerator.m in Sources */,
 				03B249CB18FF11AE00C40FD4 /* CBLModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
