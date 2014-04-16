@@ -10,9 +10,6 @@
 
 @interface CBLModelGenerator : NSObject
 
-@property (copy, nonatomic) NSString* modelPath;
-@property (copy, nonatomic) NSString* outputPath;
-
 - (id)initWithModel:(NSString*)modelPath andOutputDirectory:(NSString*)outputPath;
 
 - (int)start;

@@ -8,6 +8,11 @@
 
 #import "CBLModelGenerator.h"
 
+@interface CBLModelGenerator ()
+@property (copy, nonatomic) NSString* modelPath;
+@property (copy, nonatomic) NSString* outputPath;
+@end
+
 @implementation CBLModelGenerator
 
 - (id)initWithModel:(NSString*)modelPath andOutputDirectory:(NSString*)outputPath {
