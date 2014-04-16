@@ -10,7 +10,7 @@
 		0357B86D18FF0CDE009EA464 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0357B86C18FF0CDE009EA464 /* Foundation.framework */; };
 		0357B87018FF0CDE009EA464 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357B86F18FF0CDE009EA464 /* main.m */; };
 		0357B87418FF0CDE009EA464 /* cblmodelgenerator.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0357B87318FF0CDE009EA464 /* cblmodelgenerator.1 */; };
-		03B249CB18FF11AE00C40FD4 /* CBLModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 03B249C918FF11AE00C40FD4 /* CBLModel.xcdatamodeld */; };
+		03718C5D18FF318C000D50DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03718C5C18FF318C000D50DC /* AppDelegate.m */; };
 		03B249D018FF1E8900C40FD4 /* CBLModelGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B249CF18FF1E8900C40FD4 /* CBLModelGenerator.m */; };
 /* End PBXBuildFile section */
 
@@ -33,7 +33,9 @@
 		0357B86F18FF0CDE009EA464 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0357B87218FF0CDE009EA464 /* cblmodelgenerator-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cblmodelgenerator-Prefix.pch"; sourceTree = "<group>"; };
 		0357B87318FF0CDE009EA464 /* cblmodelgenerator.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = cblmodelgenerator.1; sourceTree = "<group>"; };
-		03B249CA18FF11AE00C40FD4 /* CBLModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CBLModel.xcdatamodel; sourceTree = "<group>"; };
+		03718C5818FF2B1F000D50DC /* CBLModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CBLModel.xcdatamodel; sourceTree = "<group>"; };
+		03718C5B18FF318C000D50DC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		03718C5C18FF318C000D50DC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		03B249CC18FF16B800C40FD4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		03B249CE18FF1E8900C40FD4 /* CBLModelGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLModelGenerator.h; sourceTree = "<group>"; };
 		03B249CF18FF1E8900C40FD4 /* CBLModelGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBLModelGenerator.m; sourceTree = "<group>"; };
@@ -81,10 +83,12 @@
 			isa = PBXGroup;
 			children = (
 				03B249CD18FF1E7600C40FD4 /* CBLModelGenerator */,
+				03718C5B18FF318C000D50DC /* AppDelegate.h */,
+				03718C5C18FF318C000D50DC /* AppDelegate.m */,
 				0357B86F18FF0CDE009EA464 /* main.m */,
 				0357B87318FF0CDE009EA464 /* cblmodelgenerator.1 */,
+				03718C5718FF2B1F000D50DC /* CBLModel.xcdatamodeld */,
 				0357B87118FF0CDE009EA464 /* Supporting Files */,
-				03B249C918FF11AE00C40FD4 /* CBLModel.xcdatamodeld */,
 			);
 			path = cblmodelgenerator;
 			sourceTree = "<group>";
@@ -159,7 +163,7 @@
 			files = (
 				0357B87018FF0CDE009EA464 /* main.m in Sources */,
 				03B249D018FF1E8900C40FD4 /* CBLModelGenerator.m in Sources */,
-				03B249CB18FF11AE00C40FD4 /* CBLModel.xcdatamodeld in Sources */,
+				03718C5D18FF318C000D50DC /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,12 +282,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		03B249C918FF11AE00C40FD4 /* CBLModel.xcdatamodeld */ = {
+		03718C5718FF2B1F000D50DC /* CBLModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				03B249CA18FF11AE00C40FD4 /* CBLModel.xcdatamodel */,
+				03718C5818FF2B1F000D50DC /* CBLModel.xcdatamodel */,
 			);
-			currentVersion = 03B249CA18FF11AE00C40FD4 /* CBLModel.xcdatamodel */;
+			currentVersion = 03718C5818FF2B1F000D50DC /* CBLModel.xcdatamodel */;
 			path = CBLModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

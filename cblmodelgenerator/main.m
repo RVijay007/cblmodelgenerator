@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CBLModelGenerator.h"
+#import "AppDelegate.h"
 
 int main(int argc, const char * argv[]) {
 
@@ -18,31 +18,26 @@ int main(int argc, const char * argv[]) {
             printf("Usage: cblmodelgenerator /path/to/xcdatamodeld/ [/path/to/outputdirectory]");
             return 1;
         }
-        
-        // Append trailing "/" if not present
+
+        // Make sure this is an xcdatamodeld file path
         NSString* dataModelPath = [NSString stringWithUTF8String:argv[1]];
-        if(![dataModelPath hasSuffix:@"/"]) {
-            dataModelPath = [@[dataModelPath, @"/"] componentsJoinedByString:@""];
-        }
-        
-        // Make sure this is an xcdatamodeld
-        if(![dataModelPath hasSuffix:@".xcdatamodeld/"]) {
+        if(![[dataModelPath pathExtension] isEqualToString:@"xcdatamodeld"]) {
             printf("File is not a valid xcdatamodel! Please pass in the xcdatamodeld. Note ending 'd'.\n");
             return 1;
         }
         
+        // Detemine what the output directory is going to be
         NSString* outputPath = [dataModelPath stringByDeletingLastPathComponent];
         if(argc > 2) {
             outputPath = [NSString stringWithUTF8String:argv[2]];
         }
         
-        printf("Reading Core Data model from %s\n\tSaving to %s\n", [dataModelPath UTF8String], [outputPath UTF8String]);
-        
         // Initialize and start CBLModelGenerator
-        CBLModelGenerator* modelGenerator = [[CBLModelGenerator alloc] initWithModel:dataModelPath andOutputDirectory:outputPath];
-         return [modelGenerator start];
+        AppDelegate* delegate = [[AppDelegate alloc] initWithModel:dataModelPath andOutputDirectory:outputPath];
+        [[NSApplication sharedApplication] setDelegate:delegate];
+        [[NSApplication sharedApplication] run];
     }
     
-    return 1;
+    return 0;
 }
 
