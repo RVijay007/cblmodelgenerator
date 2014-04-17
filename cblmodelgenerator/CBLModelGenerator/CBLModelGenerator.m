@@ -100,6 +100,11 @@ didStartElement:(NSString *)elementName
         return;
     } else if([elementName isEqualToString:@"entity"]) {
         NSString* className = attributeDict[@"representedClassName"];
+        
+        // Sometimes, user forgets to set class name as the same name as the name
+        if(className || [className isEqualToString:@""])
+            className = attributeDict[@"name"];
+        
         if(!([className isEqualToString:@"CBLModel"] || [className isEqualToString:@"CBLNestedModel"])) {
             // Only process entities not part of CBL
             printf("\tParsing %s...\n", [className UTF8String]);

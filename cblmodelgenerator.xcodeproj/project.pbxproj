@@ -34,7 +34,6 @@
 		0357B86F18FF0CDE009EA464 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0357B87218FF0CDE009EA464 /* cblmodelgenerator-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cblmodelgenerator-Prefix.pch"; sourceTree = "<group>"; };
 		0357B87318FF0CDE009EA464 /* cblmodelgenerator.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = cblmodelgenerator.1; sourceTree = "<group>"; };
-		03718C5818FF2B1F000D50DC /* CBLModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CBLModel.xcdatamodel; sourceTree = "<group>"; };
 		03718C5B18FF318C000D50DC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		03718C5C18FF318C000D50DC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		03718C6118FF4123000D50DC /* CBLEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLEntity.h; sourceTree = "<group>"; };
@@ -90,7 +89,6 @@
 				03718C5C18FF318C000D50DC /* AppDelegate.m */,
 				0357B86F18FF0CDE009EA464 /* main.m */,
 				0357B87318FF0CDE009EA464 /* cblmodelgenerator.1 */,
-				03718C5718FF2B1F000D50DC /* CBLModel.xcdatamodeld */,
 				0357B87118FF0CDE009EA464 /* Supporting Files */,
 			);
 			path = cblmodelgenerator;
@@ -286,19 +284,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		03718C5718FF2B1F000D50DC /* CBLModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				03718C5818FF2B1F000D50DC /* CBLModel.xcdatamodel */,
-			);
-			currentVersion = 03718C5818FF2B1F000D50DC /* CBLModel.xcdatamodel */;
-			path = CBLModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 0357B86118FF0CDE009EA464 /* Project object */;
 }
