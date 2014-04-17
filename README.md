@@ -46,32 +46,32 @@ Create new relationships anytime you want to link a model/nestedmodel to another
 
 - Relationship Name: ```object```
 - Relationship Type: ```To One```
-- User Info \<key,value\>: ```<itemClass, ModelObject>```
+- User Info <key,value\>: ```<itemClass, ModelObject>```
 
 **Desired Output:** ```@property (nonatomic, strong) NSArray* object;```       *// An array of JSON-compatible objects*
 
 - Relationship Name: ```object```
 - Relationship Type: ```To Many```
 - Relationship Arrangement: ```Ordered [checked]```
-- User Info \<key,value\>: ```empty```
+- User Info <key,value\>: ```empty```
 
 **Desired Output:** ```@property (nonatomic, strong) NSArray* object;```        *// An array of ModelObjects or non-JSON objects*
 
 - Relationship Name: ```object```
 - Relationship Type: ```To Many```
 - Relationship Arrangement: ```Ordered [checked]```
-- User Info \<key,value\>: ```<itemClass, ModelObject or non-JSON object>```
+- User Info <key,value\>: ```<itemClass, ModelObject or non-JSON object>```
  
 **Desired Output:** ```@property (nonatomic, strong) NSDictionary* object;```   *// A dictionary of JSON-compatible objects*
 
 - Relationship Name: ```object```
 - Relationship Type: ```To Many```
 - Relationship Arrangement: ```Ordered [UNchecked]```
-- User Info \<key,value\>: ```empty```
+- User Info <key,value\>: ```empty```
 
 **Desired Output:** ```@property (nonatomic, strong) NSDictionary* object;```   *// A dictionary of ModelObjects or non-JSON objects*
 
 - Relationship Name: ```object```
 - Relationship Type: ```To Many```
 - Relationship Arrangement: ```Ordered [UNchecked]```
-- User Info \<key,value\>: ```<itemClass, ModelObject or non-JSON object>```
+- User Info <key,value\>: ```<itemClass, ModelObject or non-JSON object>```
