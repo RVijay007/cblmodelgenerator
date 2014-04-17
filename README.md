@@ -1,6 +1,6 @@
 ### BACKGROUND
 
-This is a command line interface (CLI) to generate Couchbase Lite models from a Core Data model file, i.e. ```..xcdatamodeld```.
+This is a command line interface (CLI) to generate Couchbase Lite models from a Core Data model file, i.e. ```*.xcdatamodeld```.
 
 ### INSTALLATION
 
@@ -43,9 +43,9 @@ Transformable attributes are not supported. This will throw an error.
 Create new relationships anytime you want to link a model/nestedmodel to another model, or to make arrays/dictionaries. JSON-compatible objects include ```NSString``` and ```NSNumber```. Non-JSON compatible objects include ```NSData```, ```NSDate```, and ```NSDecimalNumber```. ```ModelObject``` refers to another entity in your CoreData model. The following examples illustrate all the ways to use relationships:
 
 **Desired Output:** ```@property (nonatomic, strong) ModelObject* object;```
-- Relationship Name: ```object```
-- Relationship Type: ```To One```
-- User Info \<key,value\>: ```<itemClass, ModelObject>```
+|Relationship Name|```object```|
+|Relationship Type| ```To One```|
+|User Info \<key,value\>| ```<itemClass, ModelObject>```|
 
 **Desired Output:** ```@property (nonatomic, strong) NSArray* object;```       *// An array of JSON-compatible objects*
 - Relationship Name: ```object```
