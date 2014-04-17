@@ -44,9 +44,9 @@ Create new relationships anytime you want to link a model/nestedmodel to another
 
 **Desired Output:** ```@property (nonatomic, strong) ModelObject* object;```
 
-|Relationship Name|```object```|
-|Relationship Type| ```To One```|
-|User Info \<key,value\>| ```<itemClass, ModelObject>```|
+- Relationship Name: ```object```
+- Relationship Type: ```To One```
+- User Info \<key,value\>: ```<itemClass, ModelObject>```
 
 **Desired Output:** ```@property (nonatomic, strong) NSArray* object;```       *// An array of JSON-compatible objects*
 
