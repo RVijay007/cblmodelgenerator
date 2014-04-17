@@ -46,6 +46,8 @@
 #pragma mark - Generate Header File methods
 
 - (void)generateHeaderFileInOutputDirectory:(NSString*)path {
+    printf("\tGenerating %s...", [[self.className stringByAppendingPathExtension:@"h"] UTF8String]);
+    
     __block NSString* imports = @"//";
     imports = [imports stringByAppendingArray:@[@"//",[self.className stringByAppendingPathExtension:@"h"]] joinedByString:@"  " terminateWith:nil];
     imports = [imports stringByAppendingArray:@[@"//",@"cblmodelgenerator"] joinedByString:@"  " terminateWith:nil];
@@ -74,6 +76,7 @@
     NSString* sourceFilePath = [path stringByAppendingPathComponent:[self.className stringByAppendingPathExtension:@"h"]];
     [fileManager removeItemAtPath:sourceFilePath error:nil];
     [fileManager createFileAtPath:sourceFilePath contents:[output dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
+    printf("done\n");
 }
 
 + (NSString*)propertyForAttributeType:(NSString*)attributeType {
@@ -99,7 +102,7 @@
         // Map all integer types to Integer
         property = @"assign) int";
     } else {
-        printf("\tAttribute type %s is undefined. Please change it and run program again!", [attributeType UTF8String]);
+        printf("\tError - Attribute type %s is undefined. Please change it and run program again!", [attributeType UTF8String]);
         exit(1);
     }
     
@@ -109,6 +112,8 @@
 #pragma mark - Generate Source File methods
 
 - (void)generateSourceFileInOutputDirectory:(NSString*)path {
+    printf("\tGenerating %s...", [[self.className stringByAppendingPathExtension:@"m"] UTF8String]);
+    
     NSString* imports = @"//";
     imports = [imports stringByAppendingArray:@[@"//",[self.className stringByAppendingPathExtension:@"m"]] joinedByString:@"  " terminateWith:nil];
     imports = [imports stringByAppendingArray:@[@"//",@"cblmodelgenerator"] joinedByString:@"  " terminateWith:nil];
@@ -137,6 +142,7 @@
     NSString* sourceFilePath = [path stringByAppendingPathComponent:[self.className stringByAppendingPathExtension:@"m"]];
     [fileManager removeItemAtPath:sourceFilePath error:nil];
     [fileManager createFileAtPath:sourceFilePath contents:[output dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
+    printf("done\n");
 }
 
 + (NSString*)itemClassMethodForRelationship:(CBLEntityRelationship*)relationship {
