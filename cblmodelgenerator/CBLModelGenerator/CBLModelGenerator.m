@@ -102,7 +102,7 @@ didStartElement:(NSString *)elementName
         NSString* className = attributeDict[@"representedClassName"];
         
         // Sometimes, user forgets to set class name as the same name as the name
-        if(className || [className isEqualToString:@""])
+        if(!className || [className isEqualToString:@""])
             className = attributeDict[@"name"];
         
         if(!([className isEqualToString:@"CBLModel"] || [className isEqualToString:@"CBLNestedModel"])) {
@@ -132,6 +132,7 @@ didStartElement:(NSString *)elementName
             [entity addProperty:relationship];
             
             NSString* valueTransformerName = attributeDict[@"valueTransformerName"];
+            relationship.name = attributeDict[@"name"];
             if([valueTransformerName isEqualToString:@"NSArray"]) {
                 // An NSArray of objects, defined by itemClass key in userInfo if non-JSON compatible
                 relationship.toMany = YES;

@@ -52,7 +52,7 @@
     imports = [imports stringByAppendingArray:@[@"//",[self.className stringByAppendingPathExtension:@"h"]] joinedByString:@"  " terminateWith:nil];
     imports = [imports stringByAppendingArray:@[@"//",@"cblmodelgenerator"] joinedByString:@"  " terminateWith:nil];
     imports = [imports stringByAppendingArray:@[@"//",@"\n"] joinedByString:@"" terminateWith:nil];
-    imports = [imports stringByAppendingString:@"\n#import <Couchbase/CouchbaseLite.h>"];
+    imports = [imports stringByAppendingString:@"\n#import <CouchbaseLite/CouchbaseLite.h>"];
     
     __block NSString* interface = [@[@"@interface", self.className, @":", self.parentClassName] componentsJoinedByString:@" "];
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
