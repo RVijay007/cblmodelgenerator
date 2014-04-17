@@ -118,11 +118,37 @@ didStartElement:(NSString *)elementName
         }
     } else if([elementName isEqualToString:@"attribute"]) {
         CBLEntity* entity = [self.entities lastObject];
-        CBLEntityAttribute* attribute = [[CBLEntityAttribute alloc] init];
-        [entity addProperty:attribute];
-        
-        attribute.name = attributeDict[@"name"];
-        attribute.type = attributeDict[@"attributeType"];
+        if([attributeDict[@"attributeType"] isEqualToString:@"Transformable"]) {
+            // Transformable is used for properties that have non-JSON objects or collections to such
+            // These are very similar to relationships; in fact, you can think of them as
+            // "relationships" to objects not displayed your model file (*.xcdatamodel)
+            
+            CBLEntityRelationship* relationship = [[CBLEntityRelationship alloc] init];
+            [entity addProperty:relationship];
+            
+            NSString* valueTransformerName = attributeDict[@"valueTransformerName"];
+            if([valueTransformerName isEqualToString:@"NSArray"]) {
+                // An NSArray of objects, defined by itemClass key in userInfo if non-JSON compatible
+                relationship.toMany = YES;
+                relationship.isOrdered = YES;
+            } else if ([valueTransformerName isEqualToString:@"NSDictionary"]) {
+                // An NSDictionary of objects, defined by itemClass key in userInfo if non-JSON compatible
+                relationship.toMany = YES;
+                relationship.isOrdered = NO;
+            } else {
+                // Mon-JSON style object
+                relationship.toMany = NO;
+                relationship.isOrdered = NO;
+                [entity addUserInfoToLastPropertyWithKey:@"itemClass" value:valueTransformerName];
+            }
+            
+        } else {
+            CBLEntityAttribute* attribute = [[CBLEntityAttribute alloc] init];
+            [entity addProperty:attribute];
+            
+            attribute.name = attributeDict[@"name"];
+            attribute.type = attributeDict[@"attributeType"];
+        }
         
     } else if([elementName isEqualToString:@"relationship"]) {
         CBLEntity* entity = [self.entities lastObject];

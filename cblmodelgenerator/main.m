@@ -15,7 +15,7 @@ int main(int argc, const char * argv[]) {
         
         // argc by default is 1 with an argv[0] = to the calling command, './cblmodelgenerator'
         if(argc < 2) {
-            printf("Usage: cblmodelgenerator /path/to/xcdatamodeld/ [/path/to/outputdirectory]");
+            printf("Usage: cblmodelgenerator /path/to/xcdatamodeld/ [/path/to/outputdirectory]\n");
             return 1;
         }
 

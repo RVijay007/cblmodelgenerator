@@ -52,7 +52,7 @@
     imports = [imports stringByAppendingArray:@[@"//",[self.className stringByAppendingPathExtension:@"h"]] joinedByString:@"  " terminateWith:nil];
     imports = [imports stringByAppendingArray:@[@"//",@"cblmodelgenerator"] joinedByString:@"  " terminateWith:nil];
     imports = [imports stringByAppendingArray:@[@"//",@"\n"] joinedByString:@"" terminateWith:nil];
-    imports = [imports stringByAppendingString:@"\n#import <Foundation/Foundation.h>"];
+    imports = [imports stringByAppendingString:@"\n#import <Couchbase/CouchbaseLite.h>"];
     
     __block NSString* interface = [@[@"@interface", self.className, @":", self.parentClassName] componentsJoinedByString:@" "];
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -61,7 +61,7 @@
             interface = [interface stringByAppendingArray:@[[CBLEntity propertyForAttributeType:attribute.type], attribute.name] joinedByString:@" " terminateWith:@";"];
         } else {
             CBLEntityRelationship* relationship = obj;
-            interface = [interface stringByAppendingArray:@[@"@property (nonatomic, strong)",[relationship className],relationship.name] joinedByString:@" " terminateWith:@";"];
+            interface = [interface stringByAppendingArray:@[@"@property (nonatomic, strong)",[[relationship className] stringByAppendingString:@"*"],relationship.name] joinedByString:@" " terminateWith:@";"];
             NSString* itemClass = relationship.userInfo[@"itemClass"];
             if(itemClass && ![itemClass isEqualToString:@""] && ![itemClass hasPrefix:@"NS"]) {
                 // Custom object item class - need to add to imports
