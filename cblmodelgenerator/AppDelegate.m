@@ -24,6 +24,10 @@
     return self;
 }
 
+- (void)dealloc {
+    NSLog(@"AppDelegate dealloc");
+}
+
 #pragma mark -- NSApplicationDelegate methods
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {

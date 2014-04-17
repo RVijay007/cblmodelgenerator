@@ -8,10 +8,14 @@
 
 #import "CBLModelGenerator.h"
 #import <AppKit/AppKit.h>
+#import "CBLEntity.h"
 
 @interface CBLModelGenerator ()
 @property (copy, nonatomic) NSString* modelPath;
 @property (copy, nonatomic) NSString* outputPath;
+@property (strong, nonatomic) NSMutableArray* entities;
+@property (strong, nonatomic) NSMutableSet* dynamicEntities;
+
 @property (assign, nonatomic) BOOL errorParsing;
 @end
 
@@ -22,6 +26,9 @@
     if(self) {
         self.modelPath = modelPath;
         self.outputPath = outputPath;
+        self.entities = [@[] mutableCopy];
+        self.dynamicEntities = [NSMutableSet set];
+        [self.dynamicEntities addObject:@"CBLModel"];
         self.errorParsing = NO;
     }
     
@@ -60,15 +67,21 @@
 
 - (void)parseCoreDataModel {
     NSString* contentFilePath = [self.modelPath stringByAppendingPathComponent:@"contents"];
-    NSXMLParser* parser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:contentFilePath]];
-    [parser setDelegate:self];
+    NSXMLParser* parser = [[NSXMLParser alloc] initWithData:[NSData dataWithContentsOfFile:contentFilePath]];
+    
     if(!parser)
-        printf("\tCould not load xml parser\n");
-    else
+        printf("\tCould not load XML parser\n");
+    else {
+        [parser setShouldProcessNamespaces:NO];
+        [parser setShouldReportNamespacePrefixes:NO];
+        [parser setShouldResolveExternalEntities:NO];
+        [parser setDelegate:self];
+        
         [parser parse];
+    }
 }
 
-#pragma mark -- NSXMLParser Delegate Methods
+#pragma mark - NSXMLParser Delegate Methods
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
     NSString* errorString = [NSString stringWithFormat:@"Error code %ld", [parseError code]];
@@ -82,15 +95,76 @@ didStartElement:(NSString *)elementName
  qualifiedName:(NSString *)qName
     attributes:(NSDictionary *)attributeDict
 {
-
     
+    if([elementName isEqualToString:@"model"]) {
+        return;
+    } else if([elementName isEqualToString:@"entity"]) {
+        NSString* className = attributeDict[@"representedClassName"];
+        if(!([className isEqualToString:@"CBLModel"] || [className isEqualToString:@"CBLNestedModel"])) {
+            // Only process entities not part of CBL
+            printf("\tParsing %s...\n", [className UTF8String]);
+            
+            CBLEntity* entity = [[CBLEntity alloc] init];
+            entity.className = className;
+            entity.parentClassName = attributeDict[@"parentEntity"];
+            
+            // CBLModels generate dynamic properties, CBLNestedModels do not
+            if([self.dynamicEntities containsObject:entity.parentClassName]) {
+                entity.isDynamic = YES;
+                [self.dynamicEntities addObject:entity.className];
+            }
+            
+            [self.entities addObject:entity];
+        }
+    } else if([elementName isEqualToString:@"attribute"]) {
+        CBLEntity* entity = [self.entities lastObject];
+        CBLEntityAttribute* attribute = [[CBLEntityAttribute alloc] init];
+        [entity addProperty:attribute];
+        
+        attribute.name = attributeDict[@"name"];
+        attribute.type = attributeDict[@"attributeType"];
+        
+    } else if([elementName isEqualToString:@"relationship"]) {
+        CBLEntity* entity = [self.entities lastObject];
+        CBLEntityRelationship* relationship = [[CBLEntityRelationship alloc] init];
+        [entity addProperty:relationship];
+        
+        relationship.name = attributeDict[@"name"];
+        if([attributeDict[@"toMany"] isEqualToString:@"YES"]) {
+            relationship.toMany = YES;
+        }
+        
+        if([attributeDict[@"ordered"] isEqualToString:@"YES"]) {
+            relationship.isOrdered = YES;
+        }
+        
+        if(attributeDict[@"destinationEntity"]) {
+            [entity addUserInfoToLastPropertyWithKey:@"itemClass" value:attributeDict[@"destinationEntity"]];
+        }
+
+    } else if([elementName isEqualToString:@"entry"]) {
+        CBLEntity* entity = [self.entities lastObject];
+        [entity addUserInfoToLastPropertyWithKey:attributeDict[@"key"] value:attributeDict[@"value"]];
+    }
 }
+
+- (void)parser:(NSXMLParser *)parser
+ didEndElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qName
+{
+    // Does Nothing
+}
+
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
     if (self.errorParsing == NO) {
-        printf("\tXML parsing done!\n");
+        printf("Finished parsing model classes! Writing class files to %s.\n", [self.outputPath UTF8String]);
+        [self.entities enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [obj generateClassesInOutputDirectory:self.outputPath];
+        }];
     } else {
-        printf("\tError parsing XML!\n");
+        printf("\tError parsing core data file!\n");
     }
     
     [[NSApplication sharedApplication] terminate:self];

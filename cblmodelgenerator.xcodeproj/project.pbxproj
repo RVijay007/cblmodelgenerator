@@ -11,6 +11,7 @@
 		0357B87018FF0CDE009EA464 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357B86F18FF0CDE009EA464 /* main.m */; };
 		0357B87418FF0CDE009EA464 /* cblmodelgenerator.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0357B87318FF0CDE009EA464 /* cblmodelgenerator.1 */; };
 		03718C5D18FF318C000D50DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03718C5C18FF318C000D50DC /* AppDelegate.m */; };
+		03718C6318FF4123000D50DC /* CBLEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 03718C6218FF4123000D50DC /* CBLEntity.m */; };
 		03B249D018FF1E8900C40FD4 /* CBLModelGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B249CF18FF1E8900C40FD4 /* CBLModelGenerator.m */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,8 @@
 		03718C5818FF2B1F000D50DC /* CBLModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CBLModel.xcdatamodel; sourceTree = "<group>"; };
 		03718C5B18FF318C000D50DC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		03718C5C18FF318C000D50DC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		03718C6118FF4123000D50DC /* CBLEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLEntity.h; sourceTree = "<group>"; };
+		03718C6218FF4123000D50DC /* CBLEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBLEntity.m; sourceTree = "<group>"; };
 		03B249CC18FF16B800C40FD4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		03B249CE18FF1E8900C40FD4 /* CBLModelGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLModelGenerator.h; sourceTree = "<group>"; };
 		03B249CF18FF1E8900C40FD4 /* CBLModelGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBLModelGenerator.m; sourceTree = "<group>"; };
@@ -106,6 +109,8 @@
 			children = (
 				03B249CE18FF1E8900C40FD4 /* CBLModelGenerator.h */,
 				03B249CF18FF1E8900C40FD4 /* CBLModelGenerator.m */,
+				03718C6118FF4123000D50DC /* CBLEntity.h */,
+				03718C6218FF4123000D50DC /* CBLEntity.m */,
 			);
 			path = CBLModelGenerator;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03718C6318FF4123000D50DC /* CBLEntity.m in Sources */,
 				0357B87018FF0CDE009EA464 /* main.m in Sources */,
 				03B249D018FF1E8900C40FD4 /* CBLModelGenerator.m in Sources */,
 				03718C5D18FF318C000D50DC /* AppDelegate.m in Sources */,
