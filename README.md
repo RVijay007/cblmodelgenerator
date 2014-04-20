@@ -22,6 +22,14 @@ You must adhere to these rules in order for the cblmodelgenerator to correctly g
 
 JSON-compatible objects include ```NSString``` and ```NSNumber```. Non-JSON compatible objects include ```NSData```, ```NSDate```, and ```NSDecimalNumber```.
 
+### Required classes in your model
+
+Starting with a blank Core Data model file, you must create an Entity named ```CBLModel```. It will not be generated in code however since CouchbaseLite already has this. Any subsequent CBLModel entities you create MUST set the ```CBLModel``` entity as its parent.
+
+If you decide to use my ```CBLNestedModel``` class (from my fork of couchbase-lite-ios), then you must also create an entity named ```CBLNestedModel``` and set it as the parent for any entities that should derive from that class. Similar to ```CBLModel``, this entity will also NOT be generated when you run the CLI since it is included with the CouchbaseLite framework.
+
+Essentially, all your entities must have a parent, either CBLModel, CBLNestedModel, or derivative entities that you create yourself.
+
 ### Attribute Type Conversions
 
 Use attribute types for normal properties that store primitives and generic foundation objects.
@@ -38,21 +46,21 @@ Use attribute types for normal properties that store primitives and generic foun
 | Binary Data              |         NSData          |
 | Transformable            |         *Object*        |
 
-Transformable attributes should be thought of as "relationships" to other objects not represented in your CoreData model file. For example, you may want an NSArray/NSDictionary of strings (JSON-compatible), or dates (non-JSON compatible). If you select Transformable, you must specify whether it is an NSArray or NSDictionary in the second ```Attribute Type``` name field. If it stores non-JSON compatible objects, then you must additionally specify the following <key=itemClass,value\> under User Info for the attribute.
+Transformable attributes should be thought of as "relationships" to other objects not represented in your CoreData model file. For example, you may want an NSArray/NSDictionary of strings (JSON-compatible), or dates (non-JSON compatible). If you select Transformable, you must specify whether it is an NSArray or NSDictionary in the second ```Attribute Type``` name field. If it stores non-JSON compatible objects, then you must additionally specify the following \<key=itemClass,value\> under User Info for the attribute.
 
 **Desired Output:** ```@property (nonatomic, strong) NSArray* object;```       *// An array of JSON-compatible objects*
 
 - Attribute Name: ```object```
 - Attribute Type: ```Transformable```
 - Attribute Type Name: ```NSArray```
-- User Info <key,value\>: ```empty``` if JSON-compatible; ```<itemClass, ClassName>``` if not JSON-compatible
+- User Info \<key,value\>: ```empty``` if JSON-compatible; ```<itemClass, ClassName>``` if not JSON-compatible
 
 **Desired Output:** ```@property (nonatomic, strong) NSDictionary* object;```   *// A dictionary of JSON-compatible objects*
 
 - Attribute Name: ```object```
 - Attribute Type: ```Transformable```
 - Attribute Type Name: ```NSDictionary```
-- User Info <key,value\>: ```empty``` if JSON-compatible; ```<itemClass, ClassName>``` if not JSON-compatible
+- User Info \<key,value\>: ```empty``` if JSON-compatible; ```<itemClass, ClassName>``` if not JSON-compatible
 
 
 ### Relationships
