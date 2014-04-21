@@ -113,6 +113,14 @@ didStartElement:(NSString *)elementName
             entity.className = className;
             entity.parentClassName = attributeDict[@"parentEntity"];
             
+            if(!entity.parentClassName) {
+                // Alternate way of making CBLModels is to define the class as abstract, CBLNestedModel if not
+                if([attributeDict[@"isAbstract"] isEqualToString:@"YES"])
+                    entity.parentClassName = @"CBLModel";
+                else
+                    entity.parentClassName = @"CBLNestedModel";
+            }
+            
             // CBLModels generate dynamic properties, CBLNestedModels do not
             if([self.dynamicEntities containsObject:entity.parentClassName]) {
                 entity.isDynamic = YES;
