@@ -14,7 +14,7 @@ This is a command line interface (CLI) to generate Couchbase Lite models from a 
 
 ```cblmodelgenerator /path/to/xcdatamodeld [/path/to/modeloutputdirectory]```
 
-Make sure your Core Data Model ```.xcdatamodeld``` is NOT included in any targets for your app as the file will be invalid in many cases.
+This tool will create a generated/ directory that will contain all your model entities. This is so that it is easy to remove/add the reference during model refreshes.
 
 ## Core Data Model File Rules
 

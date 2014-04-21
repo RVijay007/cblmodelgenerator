@@ -25,7 +25,7 @@
     self = [super init];
     if(self) {
         self.modelPath = modelPath;
-        self.outputPath = outputPath;
+        self.outputPath = [outputPath stringByAppendingPathComponent:@"generated"];
         self.entities = [@[] mutableCopy];
         self.dynamicEntities = [NSMutableSet set];
         [self.dynamicEntities addObject:@"CBLModel"];
@@ -200,6 +200,10 @@ didStartElement:(NSString *)elementName
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
     if (self.errorParsing == NO) {
         printf("Finished parsing model classes! Writing class files to %s.\n", [self.outputPath UTF8String]);
+        
+        if(![[NSFileManager defaultManager] fileExistsAtPath:self.outputPath isDirectory:nil])
+            [[NSFileManager defaultManager] createDirectoryAtPath:self.outputPath withIntermediateDirectories:YES attributes:nil error:nil];
+        
         [self.entities enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [obj generateClassesInOutputDirectory:self.outputPath];
         }];
