@@ -126,6 +126,8 @@
         [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             implementation = [implementation stringByAppendingArray:@[@"@dynamic",[obj name]] joinedByString:@" " terminateWith:@";"];
         }];
+        
+        implementation = [implementation stringByAppendingString:@"\n\n- (instancetype)initWithNewDocumentInDatabase:(CBLDatabase*)database {\n\tself = [super initWithNewDocumentInDatabase:database];\n\tif(self) {\n\t\tself.type = NSStringFromClass([self class]);\n\t}\n}"];
     }
     
     __block NSString* methods = @"";
