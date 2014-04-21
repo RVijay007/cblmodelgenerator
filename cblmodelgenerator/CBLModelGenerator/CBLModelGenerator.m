@@ -253,6 +253,7 @@ didStartElement:(NSString *)elementName
         if(entity.isDynamic) {
             // These are CBLModels
             implementation = [implementation stringByAppendingFormat:@"\t[CBLModelFactory registerClass:[%@ class] forDocumentType:NSStringFromClass([%@ class])]\n", entity.className, entity.className];
+            imports = [imports stringByAppendingFormat:@"\n#import \"%@.h\"", entity.className];
         }
     }];
     implementation = [implementation stringByAppendingString:@"}"];
