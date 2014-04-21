@@ -26,7 +26,7 @@ JSON-compatible objects include ```NSString``` and ```NSNumber```. Non-JSON comp
 
 You have two alternatives to specify that your classes inherit from CBLModels or CBLNestedModels. You should pick one based on what you prefer for readability when looking at your Core Data model.
 
-## Method 1
+#### Method 1
 
 Starting with a blank Core Data model file, you can create an Entity named ```CBLModel```. It will not be generated in code however since CouchbaseLite already has this. Any subsequent CBLModel entities you create would set the ```CBLModel``` entity as its parent.
 
@@ -34,7 +34,7 @@ If you decide to use my ```CBLNestedModel``` class (from my fork of couchbase-li
 
 Essentially, all your entities would have a parent, either CBLModel, CBLNestedModel, or derivative entities that you create yourself.
 
-## Method 2
+#### Method 2
 
 If you prefer not to have to create the CBLModel or CBLNestedModel entities on your Core Data model, then an alternative way to specify your class as inheriting from CBLModel is to declare the entity as an ```Abstract Entity```. Classes that do not declare themselves as an ```Abstract Entity``` will derive from CBLNestedModel. 
 
