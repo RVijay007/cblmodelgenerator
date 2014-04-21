@@ -94,6 +94,12 @@ Create new relationships anytime you want to link a model/nestedmodel to another
 - Relationship Type: ```To Many```
 - Relationship Arrangement: ```Ordered [UNchecked]```
 
+## Model Factory
+
+By default, this tool will set the CBLModel ```type``` parameter to be the class name of the entity if you use the initializer ```initWithNewDocumentInDatabase```. You should strive to always use this designated initializer when creating new documents in your database instead of making a new CBLDocument and then attaching a model to it.
+
+In addition, it generates separate header/source files called *ModelName*ModelFactory, which has one method ```+ (void)registerModelWithCBLModelFactory;```. You can call this class method from your AppDelegate, and all your models will automatically be registered with the CBLModelFactory to do dynamic subclassing. Please refer to CouchbaseLite documentation for more details on the CBLModelFactory.
+
 ## XCode Project Settings
 
 In CouchbaseLite, you may find yourself setting up many one-way relationships since you can always use views to filter data other ways. Keeping one-way relationships significantly improves readability of your Core Data model, but Core Data itself does not recommend using these. In order to prevent users from setting up one-way relationships, XCode will throw warnings notifying the developer of one-way relationships in the Core Data Model file.

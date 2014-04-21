@@ -203,11 +203,65 @@ didStartElement:(NSString *)elementName
         [self.entities enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [obj generateClassesInOutputDirectory:self.outputPath];
         }];
+        
+        [self createModelFactoryRegistery];
     } else {
         printf("\tError parsing core data file!\n");
     }
     
     [[NSApplication sharedApplication] terminate:self];
+}
+
+#pragma mark - Model Factory class
+
+- (void)createModelFactoryRegistery {
+    NSString* factoryClassName = [[self.modelPath lastPathComponent] stringByDeletingPathExtension];
+    factoryClassName = [factoryClassName stringByAppendingString:@"ModelFactory"];
+    
+    // Create header file
+    NSString* headerFile = [factoryClassName stringByAppendingPathExtension:@"h"];
+    printf("\tGenerating %s...", [headerFile UTF8String]);
+    __block NSString* imports = @"//";
+    imports = [imports stringByAppendingArray:@[@"//",headerFile] joinedByString:@"  " terminateWith:nil];
+    imports = [imports stringByAppendingArray:@[@"//",@"cblmodelgenerator"] joinedByString:@"  " terminateWith:nil];
+    imports = [imports stringByAppendingArray:@[@"//",@"\n"] joinedByString:@"" terminateWith:nil];
+    imports = [imports stringByAppendingString:@"\n#import <CouchbaseLite/CouchbaseLite.h>"];
+    
+    NSString* interface = [@[@"@interface", factoryClassName, @": NSObject"] componentsJoinedByString:@" "];
+    interface = [interface stringByAppendingString:@"\n\n+ (void)registerModelWithCBLModelFactory;"];
+    
+    NSString* output = [@[imports, interface, @"@end"] componentsJoinedByString:@"\n\n"];
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    NSString* headerFilePath = [self.outputPath stringByAppendingPathComponent:headerFile];
+    [fileManager removeItemAtPath:headerFilePath error:nil];
+    [fileManager createFileAtPath:headerFilePath contents:[output dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
+    printf("done\n");
+    
+    // Create source file
+    NSString* sourceFile = [factoryClassName stringByAppendingPathExtension:@"m"];
+    printf("\tGenerating %s...", [sourceFile UTF8String]);
+    imports = @"//";
+    imports = [imports stringByAppendingArray:@[@"//",sourceFile] joinedByString:@"  " terminateWith:nil];
+    imports = [imports stringByAppendingArray:@[@"//",@"cblmodelgenerator"] joinedByString:@"  " terminateWith:nil];
+    imports = [imports stringByAppendingArray:@[@"//",@"\n"] joinedByString:@"" terminateWith:nil];
+    imports = [imports stringByAppendingFormat:@"\n#import \"%@\"", headerFile];
+    
+    __block NSString* implementation = [@[@"@implementation", factoryClassName] componentsJoinedByString:@" "];
+    implementation = [implementation stringByAppendingString:@"\n\n+ (void)registerModelWithCBLModelFactory {\n"];
+    [self.entities enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        CBLEntity* entity = obj;
+        if(entity.isDynamic) {
+            // These are CBLModels
+            implementation = [implementation stringByAppendingFormat:@"\t[CBLModelFactory registerClass:[%@ class] forDocumentType:NSStringFromClass([%@ class])]\n", entity.className, entity.className];
+        }
+    }];
+    implementation = [implementation stringByAppendingString:@"}"];
+    
+    output = [@[imports, implementation, @"@end"] componentsJoinedByString:@"\n\n"];
+    NSString* sourceFilePath = [self.outputPath stringByAppendingPathComponent:sourceFile];
+    [fileManager removeItemAtPath:sourceFilePath error:nil];
+    [fileManager createFileAtPath:sourceFilePath contents:[output dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
+    printf("done\n");
 }
 
 @end

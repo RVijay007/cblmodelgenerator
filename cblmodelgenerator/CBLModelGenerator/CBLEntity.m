@@ -73,9 +73,9 @@
     // Combine parts and write to file
     NSString* output = [@[imports, interface, @"@end"] componentsJoinedByString:@"\n\n"];
     NSFileManager* fileManager = [NSFileManager defaultManager];
-    NSString* sourceFilePath = [path stringByAppendingPathComponent:[self.className stringByAppendingPathExtension:@"h"]];
-    [fileManager removeItemAtPath:sourceFilePath error:nil];
-    [fileManager createFileAtPath:sourceFilePath contents:[output dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
+    NSString* headerFilePath = [path stringByAppendingPathComponent:[self.className stringByAppendingPathExtension:@"h"]];
+    [fileManager removeItemAtPath:headerFilePath error:nil];
+    [fileManager createFileAtPath:headerFilePath contents:[output dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
     printf("done\n");
 }
 
