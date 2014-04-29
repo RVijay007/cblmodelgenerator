@@ -30,7 +30,7 @@ You have two alternatives to specify that your classes inherit from CBLModels or
 
 Starting with a blank Core Data model file, you can create an Entity named ```CBLModel```. It will not be generated in code however since CouchbaseLite already has this. Any subsequent CBLModel entities you create would set the ```CBLModel``` entity as its parent.
 
-If you decide to use my ```CBLNestedModel``` class (from my fork of couchbase-lite-ios), then you can also create an entity named ```CBLNestedModel``` and set it as the parent for any entities that should derive from that class. Similar to ```CBLModel``, this entity will also NOT be generated when you run the CLI since it is included with the CouchbaseLite framework.
+If you decide to use my ```CBLNestedModel``` class (from my fork of couchbase-lite-ios), then you can also create an entity named ```CBLNestedModel``` and set it as the parent for any entities that should derive from that class. Similar to ```CBLModel```, this entity will also NOT be generated when you run the CLI since it is included with the CouchbaseLite framework.
 
 Essentially, all your entities would have a parent, either CBLModel, CBLNestedModel, or derivative entities that you create yourself.
 
@@ -99,6 +99,10 @@ Create new relationships anytime you want to link a model/nestedmodel to another
 By default, this tool will set the CBLModel ```type``` parameter to be the class name of the entity if you use the initializer ```initWithNewDocumentInDatabase```. You should strive to always use this designated initializer when creating new documents in your database instead of making a new CBLDocument and then attaching a model to it.
 
 In addition, it generates separate header/source files called *ModelName*ModelFactory, which has one method ```+ (void)registerModelWithCBLModelFactory;```. You can call this class method from your AppDelegate, and all your models will automatically be registered with the CBLModelFactory to do dynamic subclassing. Please refer to CouchbaseLite documentation for more details on the CBLModelFactory.
+
+## Setters
+
+Setters will automatically be generated for all properties of classes that derive ```CBLNestedModel```. The setters will take care of notifying the parent CBLModel that it should be marked as dirty for saving.
 
 ## XCode Project Settings
 
