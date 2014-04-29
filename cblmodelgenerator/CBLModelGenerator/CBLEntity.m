@@ -83,7 +83,7 @@
     NSString* property = @"";
     
     if([attributeType isEqualToString:@"String"]) {
-        property = @"copy) NSString*";
+        property = @"strong) NSString*";
     } else if([attributeType isEqualToString:@"Boolean"]) {
         property = @"assign) bool";
     } else if([attributeType isEqualToString:@"Binary"]) {
@@ -135,6 +135,15 @@
         if([obj isKindOfClass:[CBLEntityRelationship class]]) {
             methods = [methods stringByAppendingString:[CBLEntity itemClassMethodForRelationship:obj]];
         }
+
+        // Only create setters for CBLNestedModels
+        if(!self.isDynamic) {
+            if([obj isKindOfClass:[CBLEntityRelationship class]]) {
+                methods = [methods stringByAppendingString:[CBLEntity setterForEntityRelationship:obj]];
+            } else {
+                methods = [methods stringByAppendingString:[CBLEntity setterForEntityAttribute:obj]];
+            }
+        }
     }];
     
     // Combine parts and write to file
@@ -152,6 +161,48 @@
         return [NSString stringWithFormat:@"+ (Class)%@ItemClass {\n\treturn [%@ class];\n}\n\n", relationship.name, relationship.userInfo[@"itemClass"]];
     } else
         return @"";
+}
+
++ (NSString*)setterForEntityAttribute:(CBLEntityAttribute*)attribute {
+    NSString* attributeType = attribute.type;
+    NSString* type = @"";
+    
+    if([attributeType isEqualToString:@"String"]) {
+        type = @"NSString*";
+    } else if([attributeType isEqualToString:@"Boolean"]) {
+        type = @"bool";
+    } else if([attributeType isEqualToString:@"Binary"]) {
+        type = @"NSData*";
+    } else if([attributeType isEqualToString:@"Date"]) {
+        type = @"NSDate*";
+    } else if([attributeType isEqualToString:@"Decimal"]) {
+        type = @"NSDecimalNumber*";
+    } else if([attributeType isEqualToString:@"Double"]) {
+        type = @"double";
+    } else if([attributeType isEqualToString:@"Float"]) {
+        type = @"float";
+    } else if([attributeType isEqualToString:@"Boolean"]) {
+        type = @"bool";
+    } else if([attributeType hasPrefix:@"Integer"]) {
+        // Map all integer types to Integer
+        type = @"int";
+    } else {
+        printf("\tError - Setter attribute type %s is undefined. Please change it and run program again!", [attributeType UTF8String]);
+        exit(1);
+    }
+    
+    NSString* setter = [NSString stringWithFormat:@"- (void)set%@:(%@)%@ {\n\t_%@ = %@;\n\t[self modified];\n}\n\n",
+                        [attribute.name stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[attribute.name substringToIndex:1] capitalizedString]],
+                        type, attribute.name, attribute.name, attribute.name];
+    
+    return setter;
+}
+
++ (NSString*)setterForEntityRelationship:(CBLEntityRelationship*)relationship {
+    NSString* setter = [NSString stringWithFormat:@"- (void)set%@:(%@*)%@ {\n\t_%@ = %@;\n\t[self modified];\n\t[self propagateParentTo:%@];\n}\n\n",
+                        [relationship.name stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[relationship.name substringToIndex:1] capitalizedString]],
+                        relationship.className, relationship.name, relationship.name, relationship.name, relationship.name];
+    return setter;
 }
 
 #pragma mark - NSObject overloaded methods

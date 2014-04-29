@@ -29,6 +29,7 @@
 @property (copy, nonatomic) NSString* name;
 @property (copy, nonatomic) NSString* type;
 @property (strong, nonatomic) NSDictionary* userInfo;
+
 @end
 
 ///////////////////////////////////////////////////////////////////////////////////////
