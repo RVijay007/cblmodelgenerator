@@ -181,6 +181,10 @@ didStartElement:(NSString *)elementName
         if(attributeDict[@"destinationEntity"]) {
             [entity addUserInfoToLastPropertyWithKey:@"itemClass" value:attributeDict[@"destinationEntity"]];
         }
+        
+        if(attributeDict[@"inverseName"]) {
+            relationship.hasInverse = YES;
+        }
 
     } else if([elementName isEqualToString:@"entry"]) {
         CBLEntity* entity = [self.entities lastObject];

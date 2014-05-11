@@ -65,7 +65,12 @@
             NSString* itemClass = relationship.userInfo[@"itemClass"];
             if(itemClass && ![itemClass isEqualToString:@""] && ![itemClass hasPrefix:@"NS"]) {
                 // Custom object item class - need to add to imports
-                imports = [imports stringByAppendingArray:@[@"#import \"",[itemClass stringByAppendingPathExtension:@"h"],@"\""] joinedByString:@"" terminateWith:nil];
+                
+                // To One relationships with an inverse will cause circular import problems, so we need to forward declare them
+                if(!(!relationship.toMany && relationship.hasInverse))
+                    imports = [imports stringByAppendingArray:@[@"#import \"",[itemClass stringByAppendingPathExtension:@"h"],@"\""] joinedByString:@"" terminateWith:nil];
+                else
+                    imports = [imports stringByAppendingArray:@[@"@class ", itemClass] joinedByString:@"" terminateWith:@";"];
             }
         }
     }];
@@ -114,7 +119,7 @@
 - (void)generateSourceFileInOutputDirectory:(NSString*)path {
     printf("\tGenerating %s...", [[self.className stringByAppendingPathExtension:@"m"] UTF8String]);
     
-    NSString* imports = @"//";
+    __block NSString* imports = @"//";
     imports = [imports stringByAppendingArray:@[@"//",[self.className stringByAppendingPathExtension:@"m"]] joinedByString:@"  " terminateWith:nil];
     imports = [imports stringByAppendingArray:@[@"//",@"cblmodelgenerator"] joinedByString:@"  " terminateWith:nil];
     imports = [imports stringByAppendingArray:@[@"//",@"\n"] joinedByString:@"" terminateWith:nil];
@@ -134,6 +139,17 @@
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if([obj isKindOfClass:[CBLEntityRelationship class]]) {
             methods = [methods stringByAppendingString:[CBLEntity itemClassMethodForRelationship:obj]];
+            
+            // Import header to To One relationships that have an inverse
+            CBLEntityRelationship* relationship = obj;
+            NSString* itemClass = relationship.userInfo[@"itemClass"];
+            if(itemClass && ![itemClass isEqualToString:@""] && ![itemClass hasPrefix:@"NS"]) {
+                // Custom object item class - need to add to imports
+                
+                // To One relationships with an inverse will cause circular import problems, so we need to forward declare them
+                if(!relationship.toMany && relationship.hasInverse)
+                    imports = [imports stringByAppendingArray:@[@"#import \"",[itemClass stringByAppendingPathExtension:@"h"],@"\""] joinedByString:@"" terminateWith:nil];
+            }
         }
 
         // Only create setters for CBLNestedModels
@@ -249,6 +265,7 @@
         self.userInfo = [@{} mutableCopy];
         self.toMany = NO;
         self.isOrdered = NO;
+        self.hasInverse = NO;
     }
     
     return self;
