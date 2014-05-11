@@ -94,6 +94,8 @@ Create new relationships anytime you want to link a model/nestedmodel to another
 - Relationship Type: ```To Many```
 - Relationship Arrangement: ```Ordered [UNchecked]```
 
+*Unsupported: A dictionary to CBLModels. Must be a dictionary to non-JSON objects or CBLNestedModels*
+
 ## Model Factory
 
 By default, this tool will set the CBLModel ```type``` parameter to be the class name of the entity if you use the initializer ```initWithNewDocumentInDatabase```. You should strive to always use this designated initializer when creating new documents in your database instead of making a new CBLDocument and then attaching a model to it.
