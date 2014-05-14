@@ -55,6 +55,10 @@
     imports = [imports stringByAppendingString:@"\n#import <CouchbaseLite/CouchbaseLite.h>"];
     
     __block NSString* interface = [@[@"@interface", self.className, @":", self.parentClassName] componentsJoinedByString:@" "];
+    if(self.parentClassName && ![self.parentClassName isEqualToString:@""] && ![self.parentClassName hasPrefix:@"NS"] && ![self.parentClassName hasPrefix:@"CBL"]) {
+        imports = [imports stringByAppendingArray:@[@"#import \"",[self.parentClassName stringByAppendingPathExtension:@"h"],@"\""] joinedByString:@"" terminateWith:nil];
+    }
+    
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if([obj isKindOfClass:[CBLEntityAttribute class]]) {
             CBLEntityAttribute* attribute = obj;
