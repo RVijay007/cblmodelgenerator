@@ -172,12 +172,12 @@ didStartElement:(NSString *)elementName
         relationship.name = attributeDict[@"name"];
         if([attributeDict[@"toMany"] isEqualToString:@"YES"]) {
             relationship.toMany = YES;
+            
+            if([attributeDict[@"ordered"] isEqualToString:@"YES"]) {
+                relationship.isOrdered = YES;
+            }
         }
-        
-        if([attributeDict[@"ordered"] isEqualToString:@"YES"]) {
-            relationship.isOrdered = YES;
-        }
-        
+
         if(attributeDict[@"destinationEntity"]) {
             [entity addUserInfoToLastPropertyWithKey:@"itemClass" value:attributeDict[@"destinationEntity"]];
         }
