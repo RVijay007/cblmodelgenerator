@@ -203,7 +203,15 @@ didStartElement:(NSString *)elementName
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
     if (self.errorParsing == NO) {
-        printf("Finished parsing model classes! Writing class files to %s.\n", [self.outputPath UTF8String]);
+        printf("Finished parsing model classes! Rechecking dynamic entities...");
+        [self.entities enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            CBLEntity* entity = obj;
+            if([self.dynamicEntities containsObject:entity.parentClassName]) {
+                entity.isDynamic = YES;
+            }
+        }];
+        
+        printf("Done! Writing class files to %s.\n", [self.outputPath UTF8String]);
         
         if(![[NSFileManager defaultManager] fileExistsAtPath:self.outputPath isDirectory:nil])
             [[NSFileManager defaultManager] createDirectoryAtPath:self.outputPath withIntermediateDirectories:YES attributes:nil error:nil];
